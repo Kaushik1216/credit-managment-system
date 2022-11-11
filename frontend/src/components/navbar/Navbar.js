@@ -14,6 +14,8 @@ export default function Navbar() {
             </div>
                 <ul class="menu-items">
                     <li><Link to="/">Home</Link></li>
+                    <li><Link to="/signin">Signin</Link></li>
+                    <li><Link to="/login">login</Link></li>
                 </ul>
                 <h1 class="logo">VCure</h1>
            
