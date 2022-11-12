@@ -1,24 +1,32 @@
 import React from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function Login() {
     const [data,setData]=useState({
         rollno:"",
         password:""
       });
-      const navigate=useNavigate()
+    const [success, setSuccess] = useState(false);
+
+  const navigate=useNavigate()
+  useEffect(()=>{
+    console.log(success)
+    if(success){
+      navigate("/")
+    }
+  },[success])
+      // const navigate=useNavigate()
       const handlechange=({currentTarget:input})=>{
         setData({...data,[input.name]:input.value});
       }
       const handleSubmit=async(e)=>{
         e.preventDefault();
         try {
+          console.log("what")
           const url=`${process.env.REACT_APP_BACKENDURL}/login`;
           const {data:res}=await axios.post(url,data);
-          console.log("succes")
-          navigate("/signin")
-          console.log(res.message)
+          setSuccess(true)
         } catch (error) {
           console.log("loginerror")
         }

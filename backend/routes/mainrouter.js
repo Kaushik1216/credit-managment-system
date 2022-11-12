@@ -12,13 +12,13 @@ router.route("/login").post(async(req,res)=>{
     try {
         const roll=req.body.rollno;
         const password=req.body.password;
-        const user= await login.findOne({
+        const user= await register.findOne({
         rollno: roll
       });
-      console.log(user)
       const hashpassord = await bcrypt.compare(password,user.password);
       if(hashpassord===true){
         console.log("correct password")
+        res.status(200).send("login")
       }else{
         console.log("incorrect password")
       }
@@ -43,6 +43,7 @@ router.route("/signin").post(async(req,res)=>{
             })
         }
         console.log("registers")
+        res.status(200).send("registered")
     } catch (error) {
         console.log("error")
     }

@@ -16,6 +16,7 @@ export default function Navbar() {
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/signin">Signin</Link></li>
                     <li><Link to="/login">login</Link></li>
+                    <li><Link to="/course">course</Link></li>
                 </ul>
                 <h1 class="logo">VCure</h1>
            

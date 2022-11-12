@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 export default function Register() {
   const [data,setData]=useState({
@@ -13,7 +13,16 @@ export default function Register() {
     password:"",
     cpassword:""
   });
+  const [success, setSuccess] = useState(false);
+
   const navigate=useNavigate()
+  useEffect(()=>{
+    console.log(success)
+    if(success){
+      setSuccess(false);
+      navigate("/")
+    }
+  },[success])
   const handlechange=({currentTarget:input})=>{
     setData({...data,[input.name]:input.value});
   }
@@ -21,11 +30,11 @@ export default function Register() {
     e.preventDefault();
     try {
       const url=`${process.env.REACT_APP_BACKENDURL}/signin`;
-      const {data:res}=await axios.post(url,data);
-      navigate("/signin")
-      console.log(res.message)
+      const d=await axios.post(url,data);
+      setSuccess(true)
+      console.log("hhh",d)
     } catch (error) {
-      
+      console.log("ref eroor")
     }
   }
   return (
@@ -42,7 +51,7 @@ export default function Register() {
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="firstName">First Name*</label>
-                    <input type="text" id="firstName"value={data.firstname} onChange={handlechange}className="form-control form-control-lg" name="firstname"required/>
+                    <input type="text" id="firstName"value={data.firstname} onChange={handlechange} className="form-control form-control-lg" name="firstname"required/>
                   </div>
 
                 </div>
@@ -50,7 +59,7 @@ export default function Register() {
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="lastName">Last Name</label>
-                    <input type="text" id="lastName" value={data.lastname} onChange={handlechange}className="form-control form-control-lg" name="lastname" required/>
+                    <input type="text" id="lastName" value={data.lastname} onChange={handlechange} className="form-control form-control-lg" name="lastname" required/>
                   </div>
 
                 </div>
