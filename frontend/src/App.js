@@ -6,7 +6,7 @@ import Register from './components/form/Register'
 import Login from './components/form/Login'
 import Course from './components/course/Course'
 import {Route,Routes} from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [user,setuser]=useState("");
@@ -18,6 +18,13 @@ function App() {
       setuser("");
     }
   }
+  useEffect(()=>{
+const data=window.localStorage.getItem("loginuser");
+if(data!=null) setuser(JSON.parse(data));
+  },[])
+  useEffect(()=>{
+    window.localStorage.setItem("loginuser",JSON.stringify(user))
+  },[user])
   const lmsg=(x)=>{
     setloginmsg(x);
   }

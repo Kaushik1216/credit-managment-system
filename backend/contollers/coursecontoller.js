@@ -4,7 +4,7 @@ exports.getAllcourse=async(req, res, next) => {
     try {
         console.log(req.body.user);
         const data = await course.findOne({
-          rollno:req.body.user
+          rollno:"B21145"
         })
      
         const context = {
@@ -23,17 +23,12 @@ exports.getAllcourse=async(req, res, next) => {
 exports.postcourse=async(req, res, next) => {
     try {
         var d= await req.body;
-        function file(item){
-          delete  item.key;
-          item["semester"]=1;
-        } 
-        await d.forEach(file);
-        console.log(d);
+        console.log(d.data)
         const newdata={
-          $set:{courselist:d}
+          $set:{courselist:d.data}
       }
       var query={
-        rollno:"B21145",
+        rollno:d.user,
       }
       const upda=await course.updateOne(query,newdata)
       console.log("docupdated")
