@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const courses = new Schema({
+const coursesSchema = new Schema({
     rollno: { type: String, required: true },
     courselist:[
-       { semester:{ type: String, required: true },
-       no: { type: Number, required: true },
+       { semester:{ type: Number, required: true },
+       key: { type: Number, required: true },
        courseid:{type:String,required:true},
        coursename:{type:String,required:true},
        coursetype:{type:String,required:true},
@@ -16,6 +16,6 @@ const courses = new Schema({
     ],
 });
 
-const course = mongoose.model('Courses',loginSchema );
+const course = mongoose.model('Courses',coursesSchema);
 
 module.exports =course ;

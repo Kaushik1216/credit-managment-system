@@ -2,7 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-export default function Login() {
+import {Link} from'react-router-dom'
+export default function Login(props) {
     const [data,setData]=useState({
         rollno:"",
         password:""
@@ -23,9 +24,12 @@ export default function Login() {
       const handleSubmit=async(e)=>{
         e.preventDefault();
         try {
-          console.log("what")
           const url=`${process.env.REACT_APP_BACKENDURL}/login`;
           const {data:res}=await axios.post(url,data);
+          if(res.status==="success"){
+            props.lmsg(res.data.message)
+          }
+          props.luser(res.data.rollno);
           setSuccess(true)
         } catch (error) {
           console.log("loginerror")
@@ -63,6 +67,8 @@ export default function Login() {
               </div>
 
             </form>
+          <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/signin">Signin</Link></div>
+         
           </div>
         </div>
       </div>
