@@ -8,14 +8,15 @@ export default function Login(props) {
         rollno:"",
         password:""
       });
-    const [success, setSuccess] = useState(false);
+    const [success, setsuccess] = useState(false);
 
   const navigate=useNavigate()
   useEffect(()=>{
-    console.log(success)
+    console.log(success,"login")
     if(success){
-      navigate("/")
+      navigate("/course")
     }
+   
   },[success])
       // const navigate=useNavigate()
       const handlechange=({currentTarget:input})=>{
@@ -30,7 +31,7 @@ export default function Login(props) {
             props.lmsg(res.data.message)
           }
           props.luser(res.data.rollno);
-          setSuccess(true)
+          setsuccess(true)
         } catch (error) {
           console.log("loginerror")
         }

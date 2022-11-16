@@ -20,6 +20,9 @@ export default function Register() {
     console.log(success)
     if(success){
       setSuccess(false);
+      // if(res.status(422)!=null){
+      //   console.log(res.status(422).error)
+      // }
       navigate("/")
     }
   },[success])
@@ -30,9 +33,11 @@ export default function Register() {
     e.preventDefault();
     try {
       const url=`${process.env.REACT_APP_BACKENDURL}/signin`;
-      const d=await axios.post(url,data);
+      const {data:res}=await axios.post(url,data);
+      
+      console.log("repon",res)
       setSuccess(true)
-      console.log("hhh",d)
+      // console.log("hhh",d)
     } catch (error) {
       console.log("ref eroor")
     }

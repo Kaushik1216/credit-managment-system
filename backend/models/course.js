@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const coursesSchema = new Schema({
     rollno: { type: String, required: true },
     courselist:[
-       { semester:{ type: Number, required: true },
-       key:{ type: Number, required: true} ,
-       no: { type: Number, required: true },
+       { semester:{ type: String, required: true },
+       key:{ type: String} ,
+       no: { type: String, required: true },
        courseid:{type:String,required:true},
        coursename:{type:String,required:true},
        coursetype:{type:String,required:true},

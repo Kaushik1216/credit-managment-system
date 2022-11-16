@@ -13,13 +13,21 @@ exports.login=async (req, res, next) => {
        const context={
          status:"success",
          data:{
-           rollno:roll,
+          rollno:roll,
            message:"Login Successfully"
          }
        }
+      //  const token = user.generateAuthToken();
+      //  res.cookie("jwttoken",token,{
+      //   expires:new Date(Data.now()+2584200),
+      //   httpOnly:true
+      //  })
+       req.session.user=roll;
        res.status(200).send(context)
      }else{
-       console.log("incorrect password")
+       res.status(422).send({
+        message:"incorrect password"
+       })
      }
    } catch (error) {
        console.log("errorlogin")

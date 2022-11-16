@@ -1,4 +1,5 @@
 const register=require("../models/signin")
+const course=require("../models/course")
 const bcrypt = require("bcryptjs");
 
 exports.signin=async (req, res, next) => {
@@ -16,9 +17,14 @@ exports.signin=async (req, res, next) => {
             degree:req.body.degree,
             password:hashpassord
             })
+            course.create({
+                rollno: req.body.rollno,
+                courselist:[
+                ], 
+            })
         }
         console.log("registers")
-        res.status(200).send("registered")
+        // res.status(200).send("registered")
     } catch (error) {
         console.log("error")
     }
