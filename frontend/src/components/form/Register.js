@@ -2,6 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {Link} from'react-router-dom'
+
 export default function Register() {
   const [data,setData]=useState({
     firstname:"",
@@ -49,7 +51,7 @@ export default function Register() {
       <div className="col-12 col-lg-9 col-xl-7">
         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
           <div className="card-body p-4 p-md-5">
-            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center">Registration</h3>
             <form  onSubmit={handleSubmit} >
                   <div className="row">
                 <div className="col-md-6 mb-4">
@@ -120,11 +122,13 @@ export default function Register() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-2">
+              <div className="mt-4 pt-2  d-flex justify-content-center">
                 <input className="btn btn-primary btn-lg" type="submit" value="Register" />
               </div>
 
             </form>
+            <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/login">login</Link></div>
+
           </div>
         </div>
       </div>

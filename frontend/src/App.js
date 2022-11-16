@@ -30,7 +30,7 @@ if(data!=null) setuser(JSON.parse(data));
   }
   return (
     <>
-    <Navbar user={user} luser={luser}/>
+   {user!=="" && <Navbar user={user} luser={luser}/>}
     <div id="app">
     <Routes>
         {/* <Route path="/" element={<Home loginmsg={loginmsg} user={user}/>}></Route> */}

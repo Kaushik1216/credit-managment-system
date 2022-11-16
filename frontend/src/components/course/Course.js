@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Course() {
+export default function Course(prop) {
   const [login,setlogin]=useState(true)
-  const notify = () => toast.success(`${props.loginmsg}`,{
+  const notify = () => toast.success(`${prop.loginmsg}`,{
     position:"top-center",
     autoClose:3000,
     theme:"colored"
@@ -32,6 +32,7 @@ export default function Course() {
   const [post, setpost] = useState(false);
   const navigate = useNavigate();
   const [semester,setsemester]=useState(1);
+  const semtotal={'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0};
   const props={};
   let luser = window.localStorage.getItem("loginuser");
   if(luser !== null) props.user = luser
@@ -74,23 +75,25 @@ export default function Course() {
           instructor: `${course[index].instructor}`,
           credit: `${course[index].credit}`,
         });
+        semtotal[`${course[index].semester}`]=parseInt(semtotal[`${course[index].semester}`])+parseInt(course[index].credit);
+        console.log(semtotal,"sum")
       }
       setDataSource(data);
     }
   }, [course]);
 
   const columns = [
-    {
-      title: "NO",
-      dataIndex: "no",
-      render: (text, record) => {
-        if (editingRow === record.no) {
-          return <Form.Item name="no"></Form.Item>;
-        } else {
-          return <p>{text}</p>;
-        }
-      },
-    },
+    // {
+    //   title: "NO",
+    //   dataIndex: "no",
+    //   render: (text, record) => {
+    //     if (editingRow === record.no) {
+    //       return <Form.Item name="no"></Form.Item>;
+    //     } else {
+    //       return <p>{text}</p>;
+    //     }
+    //   },
+    // },
     {
       title: "courseid",
       dataIndex: "courseid",
@@ -235,9 +238,11 @@ export default function Course() {
     // handleSubmit();
   };
   const addnewstudents = () => {
+    const s= semester.toString()
     const newrow = {
       key: `${dataSource.length + 1}`,
       no: `${dataSource.length + 1}`,
+      semester:s,
       courseid: "",
       coursename: "",
       coursetype: "",
@@ -304,12 +309,15 @@ export default function Course() {
   const onEditStudent = (record) => {
     setIsEditing(true);
     setEditingStudent({ ...record });
+    semtotal[record.semester]=parseInt(semtotal[record.semester])+parseInt(semtotal[record.credit])
+    console.log("semtotla",semtotal)
     console.log("her", editingRow);
   };
   const resetEditing = () => {
     setIsEditing(false);
     setEditingStudent(null);
   };
+  const [total ,settotal]=useState(0)
   const semesterchange =(x)=>{
     if(x=="d" && semester>1){
       setsemester(semester-1)
@@ -317,17 +325,19 @@ export default function Course() {
     if(x=="i" && semester<8){
       setsemester(semester+1)
     }
-    console.log("semester " ,semester)
+    settotal(semtotal[(semester.toString())])
+    console.log("semester " ,semtotal["1"])
   }
   return (
     <>
+    <div><h1 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h1></div>
+       
     <div className="w-100 d-flex justify-content-center">
-
       <ToastContainer/>
       <header className="App-header">
         <Form form={form} onFinish={onFinish}>
-          <Table columns={columns} dataSource={dataSource} rowKey="no"></Table>
-          <Button onClick={addnewstudents}>Add new course</Button>
+          <Table columns={columns} dataSource={dataSource} rowKey="no" pagination={false}></Table>
+          <Button onClick={addnewstudents} style={{marginTop:10}}>Add new course</Button>
           <Modal
             title="Edit course"
             visible={isEditing}
@@ -414,9 +424,9 @@ export default function Course() {
         </Form>
       </header>
     </div>
-    <div className="row mt-5 " style={{width:"80%"}}>
-      <div className="col d-flex justify-content-center"><button className="btn btn-success" onClick={()=>{semesterchange("d")}}>pre sem</button></div>
-      <div className="col d-flex justify-content-center"><button className="btn btn-success" onClick={()=>{semesterchange("i")}}>next sem</button></div>
+    <div className="row   mt-5 ">
+      <div className="col d-flex justify-content-end"><button className="btn btn-success" onClick={()=>{semesterchange("d")}}>pre sem</button></div>
+      <div className="col d-flex justify-content-start"><button className="btn btn-success" onClick={()=>{semesterchange("i")}}>next sem</button></div>
     </div>
     </>
   );

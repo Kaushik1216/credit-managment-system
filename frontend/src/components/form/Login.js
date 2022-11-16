@@ -37,16 +37,16 @@ export default function Login(props) {
         }
       }
   return ( <>
-    <section className="vh-100 gradient-custom">
-  <div className="container py-5 h-100">
+    <section className="vh-60 gradient-custom ">
+  <div className="container py-5 h-60 w-50">
     <div className="row justify-content-center align-items-center h-100">
       <div className="col-12 col-lg-9 col-xl-7">
         <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
           <div className="card-body p-4 p-md-5">
-            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Login Form</h3>
+            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center">Login </h3>
             <form  onSubmit={handleSubmit} >
               <div className="row">
-                <div className="col-md-6 mb-4 pb-2">
+                <div className="col mb-4 pb-2">
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="rollno">Rollno</label>
@@ -54,7 +54,9 @@ export default function Login(props) {
                   </div>
 
                 </div>
-                <div className="col-md-6 mb-4 pb-2">
+              </div>
+              <div className='row'>
+                <div className="col mb-4 pb-2">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="password">Password</label>
                     <input type="password" id="password" value={data.password} onChange={handlechange} className="form-control form-control-lg"name="password" required/>
@@ -63,8 +65,8 @@ export default function Login(props) {
                 </div>
               </div>
 
-              <div className="mt-4 pt-2">
-                <input className="btn btn-primary btn-lg" type="submit" value="Register" />
+              <div className="mt-2 pt-2  d-flex justify-content-center">
+                <input className="btn btn-primary btn-lg" type="submit" value="Login" />
               </div>
 
             </form>
