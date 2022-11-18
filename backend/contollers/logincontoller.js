@@ -19,10 +19,10 @@ exports.login=async (req, res, next) => {
        }
       //  const token = user.generateAuthToken();
       //  res.cookie("jwttoken",token,{
-      //   expires:new Date(Data.now()+2584200),
+      //   expires:new Date(Data.now()+30000),
       //   httpOnly:true
       //  })
-       req.session.user=roll;
+      //  req.session.user=roll;
        res.status(200).send(context)
      }else{
        res.status(422).send({

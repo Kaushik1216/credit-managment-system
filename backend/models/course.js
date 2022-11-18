@@ -6,7 +6,6 @@ const coursesSchema = new Schema({
     rollno: { type: String, required: true },
     courselist:[
        { semester:{ type: String, required: true },
-       key:{ type: String} ,
        no: { type: String, required: true },
        courseid:{type:String,required:true},
        coursename:{type:String,required:true},

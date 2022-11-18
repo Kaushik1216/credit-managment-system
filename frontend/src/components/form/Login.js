@@ -27,6 +27,7 @@ export default function Login(props) {
         try {
           const url=`${process.env.REACT_APP_BACKENDURL}/login`;
           const {data:res}=await axios.post(url,data);
+          console.log(res.data.message);
           if(res.status==="success"){
             props.lmsg(res.data.message)
           }
@@ -37,7 +38,9 @@ export default function Login(props) {
         }
       }
   return ( <>
-    <section className="vh-60 gradient-custom ">
+    <section className="vh-60 gradient-custom " onLoad={()=>{
+      window.localStorage.removeItem('loginuser');
+    }}>
   <div className="container py-5 h-60 w-50">
     <div className="row justify-content-center align-items-center h-100">
       <div className="col-12 col-lg-9 col-xl-7">

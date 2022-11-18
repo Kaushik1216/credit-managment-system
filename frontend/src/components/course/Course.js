@@ -8,15 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-export default function Course(prop) {
+export default function Course(props) {
   const [login,setlogin]=useState(true)
-  const notify = () => toast.success(`${prop.loginmsg}`,{
+  const notify = () => toast.success(`${props.loginmsg}`,{
     position:"top-center",
-    autoClose:3000,
-    theme:"colored"
+    autoClose:1500,
   });
   useEffect(()=>{
-    if(login){
+    if(login && props.loginmsg!=""){
 
       notify();
     }
@@ -31,18 +30,20 @@ export default function Course(prop) {
   const [deleterow, setdeleterow] = useState(true);
   const [post, setpost] = useState(false);
   const navigate = useNavigate();
+  const [total ,settotal]=useState(0)
   const [semester,setsemester]=useState(1);
   const semtotal={'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0};
-  const props={};
+  const [t,sett]=useState(semtotal)
+  const puser={};
   let luser = window.localStorage.getItem("loginuser");
-  if(luser !== null) props.user = luser
+  if(luser !== null) puser.user = luser
   else navigate("/login")
   const fun = async () => {
     try {
-      console.log(props.user,"user in data fetch")
+      console.log(puser.user,"user in data fetch")
       const url=`${process.env.REACT_APP_BACKENDURL}/course`;
       const response =await axios.post(url,{
-        user:props.user,
+        user:puser.user,
         type:"get"
       })
       console.log("data",response.data.data)
@@ -65,6 +66,7 @@ export default function Course(prop) {
     if (course != []) {
       setload(false);
       const data = [];
+      sett({'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0})
       for (let index = 0; index < course.length; index++) {
         data.push({
           no: `${course[index].no}`,
@@ -75,25 +77,18 @@ export default function Course(prop) {
           instructor: `${course[index].instructor}`,
           credit: `${course[index].credit}`,
         });
-        semtotal[`${course[index].semester}`]=parseInt(semtotal[`${course[index].semester}`])+parseInt(course[index].credit);
-        console.log(semtotal,"sum")
+        var sem=t;
+        sem[`${course[index].semester}`]=parseInt(sem[`${course[index].semester}`])+parseInt(course[index].credit);
+        sett(sem)
       }
       setDataSource(data);
+      var  temp=t;
+      settotal(temp[1])
+      console.log(t,"total course")
     }
   }, [course]);
 
   const columns = [
-    // {
-    //   title: "NO",
-    //   dataIndex: "no",
-    //   render: (text, record) => {
-    //     if (editingRow === record.no) {
-    //       return <Form.Item name="no"></Form.Item>;
-    //     } else {
-    //       return <p>{text}</p>;
-    //     }
-    //   },
-    // },
     {
       title: "courseid",
       dataIndex: "courseid",
@@ -266,21 +261,17 @@ export default function Course(prop) {
         }
         tem.forEach(file1);
         setDataSource(tem);
-        // function file2(item) {
-        //   item["semester"] = 1;
-        // }
-        // tem.forEach(file2);
         console.log("temp",tem)
-        console.log(props.user,"users")
+        console.log(puser.user,"users")
         const url = `${process.env.REACT_APP_BACKENDURL}/course`;
         const d = await axios.post(url, {
           data: tem,
-          user: props.user,
+          user: puser.user,
           type:"post"
         });
       };
       s();
-      console.log("datasource updated", props.user);
+      console.log("datasource updated", puser.user);
       console.log("datasource0", dataSource);
     } catch (error) {
       console.log("error in delete document");
@@ -317,20 +308,23 @@ export default function Course(prop) {
     setIsEditing(false);
     setEditingStudent(null);
   };
-  const [total ,settotal]=useState(0)
+
+  
   const semesterchange =(x)=>{
+    var  temp=t;
     if(x=="d" && semester>1){
+      settotal(temp[semester-1])
       setsemester(semester-1)
     }
     if(x=="i" && semester<8){
+      settotal(temp[semester+1])
       setsemester(semester+1)
     }
-    settotal(semtotal[(semester.toString())])
-    console.log("semester " ,semtotal["1"])
+    console.log("semester " ,temp[semester])
   }
   return (
     <>
-    <div><h1 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h1></div>
+    <div><h2 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h2></div>
        
     <div className="w-100 d-flex justify-content-center">
       <ToastContainer/>
@@ -375,7 +369,7 @@ export default function Course(prop) {
               }}
               addonBefore="courseid"
             />
-            <Input
+            <Input style={{marginTop:"5px"}}
               value={editingStudent?.semester}
               onChange={(e) => {
                 setEditingStudent((pre) => {
@@ -391,7 +385,7 @@ export default function Course(prop) {
                   return { ...pre, coursename: e.target.value };
                 });
               }}
-              addonBefore="credit"
+              addonBefore="coursename"
             />
             <Input style={{marginTop:"5px"}}
               value={editingStudent?.coursetype}
@@ -400,7 +394,7 @@ export default function Course(prop) {
                   return { ...pre, coursetype: e.target.value };
                 });
               }}
-              addonBefore="credit"
+              addonBefore="coursetype"
             />
             <Input style={{marginTop:"5px"}}
               value={editingStudent?.instructor}

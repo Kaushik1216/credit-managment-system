@@ -5,7 +5,7 @@ exports.getAllcourse=async(req, res, next) => {
       var d= await req.body;
         console.log(d.user);
         const data = await course.findOne({
-          rollno:"B21145"
+          rollno:(d.user.slice(1,7))
         })
      
         const context = {

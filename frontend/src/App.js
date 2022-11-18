@@ -1,13 +1,13 @@
 
 import './App.css';
 import Navbar from './components/navbar/Navbar';
-import Home from './components/home/Home';
+// import Home from './components/home/Home';
 import Register from './components/form/Register'
 import Login from './components/form/Login'
 import Course from './components/course/Course'
-import {Route,Routes} from 'react-router-dom';
+import {Navigate, Route,Routes} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-
+import Profile from './components/profile/Profile';
 function App() {
   const [user,setuser]=useState("");
   const [loginmsg,setloginmsg]=useState("");
@@ -34,9 +34,12 @@ if(data!=null) setuser(JSON.parse(data));
     <div id="app">
     <Routes>
         {/* <Route path="/" element={<Home loginmsg={loginmsg} user={user}/>}></Route> */}
+        <Route path="" element={<Navigate to="/login"/>}></Route>
         <Route path="/signin" element={<Register/>}></Route>
         <Route path="/login" element={<Login luser={luser} lmsg={lmsg}/>}></Route>
-        <Route path="/course" element={<Course user={user}/>}></Route>
+        { user!=="" &&<Route path="/course" element={<Course user={user} loginmsg={loginmsg}/>}></Route>}
+        { user!=="" &&<Route path="/profile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
+        { user!=="" &&<Route path="/editprofile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
         {/* <Route path="/" element={<Navigate replace to="/login"/>}></Route> */}
     </Routes>
     </div>

@@ -34,7 +34,7 @@ const Register = mongoose.model("Registers", registerSchema);
 
 registerSchema.methods.generateAuthToken = async function(){
   try {
-    let token =jwt.sign({_id:this._id},process.env.SECRET);
+    let token =jwt.sign({_id:this._id.toString()},process.env.SECRET);
     this.tokens=this.token.concat({token:token})
     await this.save();
     return token;
