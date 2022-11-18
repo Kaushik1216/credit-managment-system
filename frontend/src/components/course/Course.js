@@ -16,25 +16,28 @@ export default function Course(props) {
   });
   useEffect(()=>{
     if(login && props.loginmsg!=""){
-
-      notify();
+       notify();
     }
     setlogin(false)
   },[])
-
+  const puser={};
+  
   const [dataSource, setDataSource] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [form] = Form.useForm();
   const [course, setcourse] = useState([]);
   const [load, setload] = useState(false);
-  const [deleterow, setdeleterow] = useState(true);
+  // const [deleterow, setdeleterow] = useState(true);
   const [post, setpost] = useState(false);
   const navigate = useNavigate();
   const [total ,settotal]=useState(0)
   const [semester,setsemester]=useState(1);
+  const [totalcredit,settotalcredit]=useState(0);
+  const [totalcourse,settotalcourse]=useState(0);
+  const [operation,setoperation]=useState("");
   const semtotal={'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0};
   const [t,sett]=useState(semtotal)
-  const puser={};
+  // const [puser,setpuser]=useState("");
   let luser = window.localStorage.getItem("loginuser");
   if(luser !== null) puser.user = luser
   else navigate("/login")
@@ -80,6 +83,12 @@ export default function Course(props) {
         var sem=t;
         sem[`${course[index].semester}`]=parseInt(sem[`${course[index].semester}`])+parseInt(course[index].credit);
         sett(sem)
+        const values = Object.values(sem);
+        settotalcourse(data.length);
+        const sum = values.reduce((accumulator, value) => {
+          return accumulator + value;
+         }, 0);
+         settotalcredit(sum)
       }
       setDataSource(data);
       var  temp=t;
@@ -263,9 +272,17 @@ export default function Course(props) {
         setDataSource(tem);
         console.log("temp",tem)
         console.log(puser.user,"users")
+        const values = Object.values(t);
+        settotalcourse(tem.length);
+        const sum = values.reduce((accumulator, value) => {
+          return accumulator + value;
+         }, 0);
+         settotalcredit(sum)
         const url = `${process.env.REACT_APP_BACKENDURL}/course`;
         const d = await axios.post(url, {
           data: tem,
+          credit:sum,
+          course:tem.length,
           user: puser.user,
           type:"post"
         });
@@ -282,18 +299,26 @@ export default function Course(props) {
 
    
   const deleteStudents = (record) => {
-    console.log(typeof record.toString(), "key");
-    const ff = dataSource.filter((student) => student.no !== record);
-    setDataSource(ff);
-    console.log("Hello");
-    console.log(dataSource);
-    setload(true)
-  console.log(load,"load")
-    if (post === true) {
-      setpost(false);
-    } else {
-      setpost(true);
-    }
+    Modal.confirm({
+      title:'Are you sure, to delete this course',
+      okText:'YES',
+      okType:"danger",
+      onOk:()=>{
+
+        console.log(typeof record.toString(), "key");
+        const ff = dataSource.filter((student) => student.no !== record);
+        setDataSource(ff);
+        console.log("Hello");
+        console.log(dataSource);
+        setload(true)
+      console.log(load,"load")
+        if (post === true) {
+          setpost(false);
+        } else {
+          setpost(true);
+        }
+      }
+    })
   };
   const [isEditing, setIsEditing] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
@@ -324,7 +349,7 @@ export default function Course(props) {
   }
   return (
     <>
-    <div><h2 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h2></div>
+    <div ><h2 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h2></div>
        
     <div className="w-100 d-flex justify-content-center">
       <ToastContainer/>

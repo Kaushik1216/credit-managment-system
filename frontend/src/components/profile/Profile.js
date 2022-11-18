@@ -2,8 +2,11 @@ import React, { useEffect } from 'react'
 import './profile.css'
 import axios from 'axios';
 import { useState } from 'react';
+import pimg from "./profiletwo.svg"
 export default function Profile(props) {
     const [edit,setedit]=useState(false);
+     const [totalcredit,settotalcredit]=useState(0);
+   const [totalcourse,settotalcourse]=useState(0);
     const [data,setData]=useState({
         firstname:"dds",
         lastname:"ds",
@@ -20,6 +23,8 @@ export default function Profile(props) {
             user:props.user,
           });
         setData(res.data.data)
+        settotalcourse(res.data.totalcourse);
+        settotalcredit(res.data.totalcredit);
     } catch (error) {
         console.log("profileload error")
     }
@@ -29,12 +34,12 @@ export default function Profile(props) {
    },[])
       const updateprofile=async()=>{
         try {
-          const url=`${process.env.REACT_APP_BACKENDURL}/profile`;
+          const url=`${process.env.REACT_APP_BACKENDURL}/editprofile`;
           const {data:res}=await axios.post(url,{
             user:props.user,
             data:data
           });
-          // console.log("hhh",d)
+          console.log("hhh",data)
         } catch (error) {
           console.log("ref eroor")
         }
@@ -43,23 +48,34 @@ export default function Profile(props) {
         setData({...data,[input.name]:input.value});
       }
       const isupdate=async()=>{
-        if(edit===false){
-            updateprofile();
-        }
-        setedit(false);
+        console.log("progile is update")
+  
+          updateprofile();
+          setedit(false);
+     
       }
   return (
     <>
-    <div className="container w-75 profilecard"  >
+    <div className="container w-75 profilecard" >
         <div className="row " style={{minHeight:"80vh"}}>
-            <div className="col-4 leftprofile" >33</div>
+            <div className="col-4 leftprofile" >
+              <div className="row mt-4 d-flex justify-content-center"style={{minHeight:"30%"}}>
+              <img src={pimg}alt=""style={{height:"200px",width:"200px"}} />
+              <h6 className='text-center'>{data.firstname}  {data.lastname}</h6>
+              <h6 className='text-center'> {data.email}</h6>
+              </div>
+              <div className="row text-center" >
+                <h6>totalcourse : {totalcourse}</h6>
+                <h6>totalcredit  : {totalcredit}</h6>
+              </div>
+            </div>
             <div className="col-8 rightprofile" >
                 <form >
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="firstname">FirstName</label></div>
+                    <label className="form-label" htmlFor="firstname"> <h6>FirstName</h6></label></div>
                     <div className="col-sm-6">
-                        <p style={{display:`${edit!==false?"none":"block"}`}}>{data.firstname}</p>
+                        <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.firstname}</h6>
                     <input  style={{display:`${edit===false?"none":"block"}`}}type="text" id="firstname" value={data.firstname} onChange={handlechange} className="form-control form-control-md readonly" name="firstname" required/>
                   
                   </div>
@@ -67,9 +83,9 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="lastname">Lastname</label></div>
+                    <label className="form-label" htmlFor="lastname"> <h6>Lastname</h6></label></div>
                     <div className="col-sm-6">
-                    <p style={{display:`${edit!==false?"none":"block"}`}}>{data.lastname}</p>
+                    <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.lastname}</h6>
 
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="lastname" value={data.lastname} onChange={handlechange} className="form-control form-control-md" name="lastname" required/>
                   
@@ -78,9 +94,9 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="email">Email</label></div>
+                    <label className="form-label" htmlFor="email"> <h6>Email</h6></label></div>
                     <div className="col-sm-6">
-                    <p style={{display:`${edit!==false?"none":"block"}`}}>{data.email}</p>
+                    <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.email}</h6>
 
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="email" value={data.email} onChange={handlechange} className="form-control form-control-md" name="email" required/>
                   
@@ -89,9 +105,9 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno">Roll No</label></div>
+                    <label className="form-label" htmlFor="rollno"> <h6>Roll No</h6></label></div>
                     <div className="col-sm-6">
-                    <p style={{display:`${edit!==false?"none":"block"}`}}>{data.rollno}</p>
+                    <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.rollno}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="rollno" value={data.rollno} onChange={handlechange} className="form-control form-control-md" name="rollno" required/>
                   
                   </div>
@@ -99,9 +115,9 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno">Branch</label></div>
+                    <label className="form-label" htmlFor="rollno"><h6>Branch</h6></label></div>
                     <div className="col-sm-6">
-                    <p style={{display:`${edit!==false?"none":"block"}`}}>{data.branch}</p>
+                    <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.branch}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="branch" value={data.branch} onChange={handlechange} className="form-control form-control-md" name="branch" required/>
                   
                   </div>
@@ -109,9 +125,9 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno">Degree</label></div>
+                    <label className="form-label" htmlFor="rollno"><h6>Degree</h6></label></div>
                     <div className="col-sm-6">
-                    <p style={{display:`${edit!==false?"none":"block"}`}}>{data.degree}</p>
+                    <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.degree}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="degree" value={data.rollno} onChange={handlechange} className="form-control form-control-md" name="degree" required/>
                   
                   </div>
@@ -119,8 +135,13 @@ export default function Profile(props) {
               </div>
          <div className=' mt-4 d-flex justify-content-center'>
           <div className="row ">
-            <button className='btn btn-info'  style={{display:`${edit!==false?"none":"block"}`}}>Edit Profile</button>
-            <button className='btn btn-info'  style={{display:`${edit===false?"none":"block"}`}} >Update Profile</button>
+          <input className="btn btn-primary btn-sm" onClick={()=>{
+            setedit(true)
+          }}style={{display:`${edit!==false?"none":"block"}`}} value="Edit profile" />
+          <input className="btn btn-primary btn-sm" onClick={()=>{
+              setedit(false)
+              isupdate();          
+          }}style={{display:`${edit===false?"none":"block"}`}}   value="Update profile" />
           </div>
           </div>
           </form>

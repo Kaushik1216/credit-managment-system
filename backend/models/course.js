@@ -14,6 +14,9 @@ const coursesSchema = new Schema({
        credit:{type:Number,required:true}, 
       }
     ],
+    totalcourse:{type:Number},
+    totalcredit:{type:Number}
+
 });
 
 const course = mongoose.model('Courses',coursesSchema);

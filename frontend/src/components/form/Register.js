@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Link} from'react-router-dom'
-
+import signin from "./signin.svg"
 export default function Register() {
   const [data,setData]=useState({
     firstname:"",
@@ -45,16 +45,22 @@ export default function Register() {
     }
   }
   return (
-    <><section className="vh-100 gradient-custom">
-  <div className="container py-5 h-100">
+    <><section className=" gradient-custom"style={{marginTop:"-100px"}}  >
+  <div className="container py-5 h-100 ">
     <div className="row justify-content-center align-items-center h-100">
-      <div className="col-12 col-lg-9 col-xl-7">
-        <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
-          <div className="card-body p-4 p-md-5">
-            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center">Registration</h3>
+        <div className="card shadow-2-strong card-registration">
+        <div className="row formshadow"  style={{borderRadius: "10px"}}>
+        <div className="col-6  leftlogin" >
+        <div className="d-flex align-items-center justify-content-center " style={{marginTop:"40px"}}><h1 style={{color:"#6D83F2"}}>Welcome !</h1></div>
+          <div className="d-flex align-items-center justify-content-center"><img src={signin} alt="" /></div>
+   
+      </div>
+         <div className="col-6 mt-4">
+          <div className="card-body p-1 p-md-3 ">
+            <h3 className="mb-4   d-flex justify-content-center" style={{color:"#6D83F2"}}>Registration</h3>
             <form  onSubmit={handleSubmit} >
                   <div className="row">
-                <div className="col-md-6 mb-4">
+                <div className="col-md-6 mb-3">
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="firstName">First Name*</label>
@@ -62,7 +68,7 @@ export default function Register() {
                   </div>
 
                 </div>
-                <div className="col-md-6 mb-4">
+                <div className="col-md-6 mb-3">
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="lastName">Last Name</label>
@@ -73,14 +79,14 @@ export default function Register() {
               </div>
 
               <div className="row">
-                <div className="col-md-6 mb-4 d-flex align-items-center">
+                <div className="col-md-6 mb-3 d-flex align-items-center">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="emailAddress" >Email</label>
                     <input type="email" id="emailAddress" value={data.email} onChange={handlechange} className="form-control form-control-lg" name="email" required/>
                   </div>
 
                 </div>
-                <div className="col-md-6 mb-4 d-flex align-items-center">
+                <div className="col-md-6 mb-3 d-flex align-items-center">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="rollno" >Rollno</label>
                     <input type="text" id="rollno" value={data.rollno} onChange={handlechange} className="form-control form-control-lg" name="rollno" required/>
@@ -89,14 +95,14 @@ export default function Register() {
                 </div>
                 </div>
               <div className="row">
-                <div className="col-md-6 mb-4 d-flex align-items-center">
+                <div className="col-md-6 mb-3 d-flex align-items-center">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="branch" >Branch</label>
                     <input type="text" id="branch" value={data.branch} onChange={handlechange} className="form-control form-control-lg" name="branch" required/>
                   </div>
 
                 </div>
-                <div className="col-md-6 mb-4 d-flex align-items-center">
+                <div className="col-md-6 mb-3 d-flex align-items-center">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="degree" >Degree</label>
                     <input type="text" id="degree" value={data.degree} onChange={handlechange} className="form-control form-control-lg" name="degree" required/>
@@ -105,14 +111,14 @@ export default function Register() {
                 </div>
                 </div>
               <div className="row">
-                <div className="col-md-6 mb-4 pb-2">
+                <div className="col-md-6 mb-3 pb-2">
                  <div className="form-outline">
                     <label className="form-label" htmlFor="phoneNumber">Password</label>
                     <input type="password" id="password" value={data.password} onChange={handlechange} className="form-control form-control-lg"name="password" required/>
                   </div>
 
                 </div>
-                <div className="col-md-6 mb-4 pb-2">
+                <div className="col-md-6 mb-3 pb-2">
 
                   <div className="form-outline">
                     <label className="form-label" htmlFor="phoneNumber">Confirm Password</label>
@@ -122,7 +128,7 @@ export default function Register() {
                 </div>
               </div>
 
-              <div className="mt-4 pt-2  d-flex justify-content-center">
+              <div className="mt-3 pt-2  d-flex justify-content-center">
                 <input className="btn btn-primary btn-lg" type="submit" value="Register" />
               </div>
 
@@ -133,6 +139,8 @@ export default function Register() {
         </div>
       </div>
     </div>
+  </div>
+
   </div>
 </section>
     </>

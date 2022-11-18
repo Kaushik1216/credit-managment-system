@@ -38,7 +38,7 @@ exports.postcourse=async(req, res, next) => {
             rollno:c.slice(1,7)
           })
           
-       console.log(data)
+      //  console.log(data)
           const context = {
             status: "success",
             data: data.courselist,
@@ -57,7 +57,7 @@ exports.postcourse=async(req, res, next) => {
           // console.log(d.data)
           console.log(d.user)
           const newdata={
-            $set:{courselist:d.data}
+            $set:{courselist:d.data,totalcredit:d.credit,totalcourse:d.course}
         }
         console.log(req.session)
         var query={

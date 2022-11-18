@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Link} from'react-router-dom'
+import loginimg from "./login.svg"
 export default function Login(props) {
     const [data,setData]=useState({
         rollno:"",
@@ -38,15 +39,23 @@ export default function Login(props) {
         }
       }
   return ( <>
-    <section className="vh-60 gradient-custom " onLoad={()=>{
+    <section className=" gradient-custom " onLoad={()=>{
       window.localStorage.removeItem('loginuser');
-    }}>
-  <div className="container py-5 h-60 w-50">
-    <div className="row justify-content-center align-items-center h-100">
-      <div className="col-12 col-lg-9 col-xl-7">
-        <div className="card shadow-2-strong card-registration" style={{borderRadius: "15px"}}>
+    }} style={{marginTop:"-100px"}} >
+  <div className="container py-5 " style={{width:"70%"}}>
+    <div className="row justify-content-center align-items-center h-100 " >
+      {/* <div className="col-12 col-lg-9 col-xl-7" style={{border:"1px solid red"}}> */}
+      
+        <div className="card shadow-2-strong card-registration" >
+        <div className="row formshadow" style={{borderRadius: "10px"}}>
+        <div className="col-6  leftlogin" >
+          <div className="d-flex align-items-center justify-content-center " style={{marginTop:"45px"}}><h1 style={{color:"#6D83F2"}}>Welcome back !</h1></div>
+          <div className="d-flex align-items-center justify-content-center"><img src={loginimg} alt="" /></div>
+   
+      </div>
+         <div className="col-6">
           <div className="card-body p-4 p-md-5">
-            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center">Login </h3>
+            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center" style={{color:"#6D83F2"}}>Login </h3>
             <form  onSubmit={handleSubmit} >
               <div className="row">
                 <div className="col mb-4 pb-2">
@@ -77,7 +86,9 @@ export default function Login(props) {
          
           </div>
         </div>
-      </div>
+        </div>
+        </div>
+      {/* </div> */}
     </div>
   </div>
 </section>

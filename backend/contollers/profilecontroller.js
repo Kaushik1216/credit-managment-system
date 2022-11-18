@@ -1,12 +1,15 @@
 const register=require("../models/signin")
-
+const course=require("../models/course")
 exports.getprofile=async(req,res)=>{
     try {
         const d=req.body;
     const userinfo= await register.findOne({rollno:(d.user.slice(0,7))})
+    const courseinfo = await course.findOne({rollno:(d.user.slice(0,7))})
         context={
             status:"Success",
-            data:userinfo
+            data:userinfo,
+            totalcredit:courseinfo.totalcredit,
+            totalcourse:courseinfo.totalcourse
         }
         res.status(200).send(context)
         
@@ -19,22 +22,20 @@ exports.editprofile=async(req,res)=>{
     try {
         const d=req.body;
         var query={
-            rollno:d.user.slice(1,7),
+            rollno:d.user.slice(0,7),
           }
         const newdata={
-            firstname:req.body.firstname,
-            lastname:req.body.lastname,
-            email:req.body.email,
-            rollno:req.body.rollno,
-            branch:req.body.branch,
-            degree:req.body.degree, 
+            firstname:req.body.data.firstname,
+            lastname:req.body.data.lastname,
+            email:req.body.data.email,
+            rollno:req.body.data.rollno,
+            branch:req.body.data.branch,
+            degree:req.body.data.degree, 
         }
-        const upda=await register.updateOne(query,newdata, function(err, res) {
-            if (err) throw err;
-            console.log("1 profile updated");
-          })
+        console.log("editprofile",query,newdata)
+        const upda=await register.updateOne(query,newdata)
 
     } catch (error) {
-        
+        console.log("error in profile update")
     }
 }

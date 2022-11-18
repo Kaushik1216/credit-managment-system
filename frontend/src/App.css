@@ -1,3 +1,7 @@
 #app{
   padding-top: 100px;
 }
+
+.formshadow{
+    box-shadow:1px 1px 3px 3px #aaa;
+}

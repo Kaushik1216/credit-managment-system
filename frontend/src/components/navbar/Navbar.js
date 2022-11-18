@@ -13,7 +13,8 @@ export default function Navbar(props) {
     }
   },[success])
   const logout =async()=>{
-    localStorage.clear();
+    // localStorage.clear();
+    window.localStorage.setItem("loginuser",JSON.stringify(""))
     props.luser("")
     setSuccess(true);
   }
@@ -32,7 +33,7 @@ export default function Navbar(props) {
                     { props.user==="" && <li><Link to="/signin">Signin</Link></li>}
                     { props.user==="" && <li><Link to="/login">login</Link></li>}
                     {props.user!=="" && <li><Link to="/course">course</Link></li>}
-                    {props.user!=="" && <li><Link onClick={logout}>logout</Link></li>}
+                    {props.user!=="" && <li><Link onClick={logout} to="/login">logout</Link></li>}
                     {props.user!=="" && <li><Link to="/profile">Profile</Link></li>}
                     <li><Link to="/course">{props.user}</Link></li>
                 </ul>
