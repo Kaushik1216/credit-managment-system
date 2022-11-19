@@ -32,10 +32,8 @@ exports.editprofile=async(req,res)=>{
             branch:req.body.data.branch,
             degree:req.body.data.degree, 
         }
-        console.log("editprofile",query,newdata)
         const upda=await register.updateOne(query,newdata)
 
     } catch (error) {
-        console.log("error in profile update")
-    }
+        res.status(422).send(error)    }
 }

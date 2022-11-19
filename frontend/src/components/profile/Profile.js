@@ -65,15 +65,17 @@ export default function Profile(props) {
               <h6 className='text-center'> {data.email}</h6>
               </div>
               <div className="row text-center" >
-                <h6>totalcourse : {totalcourse}</h6>
-                <h6>totalcredit  : {totalcredit}</h6>
+                <h6>Total courses : {totalcourse}</h6>
+                <h6>Total credits  : {totalcredit}</h6>
+                <h6>Remaining credits  : {160-totalcredit}</h6>
+              
               </div>
             </div>
             <div className="col-8 rightprofile" >
                 <form >
-            <div className="row mt-4">
+            <div className="row mt-4 ">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="firstname"> <h6>FirstName</h6></label></div>
+                    <label className="form-label" htmlFor="firstname"> <h6>FirstName:</h6></label></div>
                     <div className="col-sm-6">
                         <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.firstname}</h6>
                     <input  style={{display:`${edit===false?"none":"block"}`}}type="text" id="firstname" value={data.firstname} onChange={handlechange} className="form-control form-control-md readonly" name="firstname" required/>
@@ -83,7 +85,7 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="lastname"> <h6>Lastname</h6></label></div>
+                    <label className="form-label" htmlFor="lastname"> <h6>Lastname :</h6></label></div>
                     <div className="col-sm-6">
                     <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.lastname}</h6>
 
@@ -94,7 +96,7 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="email"> <h6>Email</h6></label></div>
+                    <label className="form-label" htmlFor="email"> <h6>Email :</h6></label></div>
                     <div className="col-sm-6">
                     <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.email}</h6>
 
@@ -105,7 +107,7 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno"> <h6>Roll No</h6></label></div>
+                    <label className="form-label" htmlFor="rollno"> <h6>Roll No :</h6></label></div>
                     <div className="col-sm-6">
                     <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.rollno}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="rollno" value={data.rollno} onChange={handlechange} className="form-control form-control-md" name="rollno" required/>
@@ -115,7 +117,7 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno"><h6>Branch</h6></label></div>
+                    <label className="form-label" htmlFor="rollno"><h6>Branch :</h6></label></div>
                     <div className="col-sm-6">
                     <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.branch}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="branch" value={data.branch} onChange={handlechange} className="form-control form-control-md" name="branch" required/>
@@ -125,7 +127,7 @@ export default function Profile(props) {
               </div>
             <div className="row mt-4">
                  <div className="col-sm-2">
-                    <label className="form-label" htmlFor="rollno"><h6>Degree</h6></label></div>
+                    <label className="form-label" htmlFor="rollno"><h6>Degree :</h6></label></div>
                     <div className="col-sm-6">
                     <h6 style={{display:`${edit!==false?"none":"block"}`}}>{data.degree}</h6>
                     <input style={{display:`${edit===false?"none":"block"}`}} type="text" id="degree" value={data.rollno} onChange={handlechange} className="form-control form-control-md" name="degree" required/>

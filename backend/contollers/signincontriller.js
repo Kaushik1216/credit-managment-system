@@ -23,10 +23,8 @@ exports.signin=async (req, res, next) => {
                 ], 
             })
         }
-        console.log("registers")
-        // res.status(200).send("registered")
     } catch (error) {
-        console.log("error")
+        res.status(400).send(error)
     }
 
 };

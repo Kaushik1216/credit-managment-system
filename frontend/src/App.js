@@ -38,7 +38,7 @@ if(data!=null) setuser(JSON.parse(data));
         <Route path="" element={<Navigate to="/login"/>}></Route>
         <Route path="/signin" element={<Register/>}></Route>
         <Route path="/login" element={<Login luser={luser} lmsg={lmsg}/>}></Route>
-        { user!=="" &&<Route path="/course" element={<Course user={user} loginmsg={loginmsg}/>}></Route>}
+        { user!=="" &&<Route path="/course" element={<Course user={user} loginmsg={loginmsg} lmsg={lmsg}/>}></Route>}
         { user!=="" &&<Route path="/profile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
         {<Route path="/editprofile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
         {/* <Route path="/" element={<Navigate replace to="/login"/>}></Route> */}

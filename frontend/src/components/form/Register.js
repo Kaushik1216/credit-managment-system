@@ -21,11 +21,7 @@ export default function Register() {
   useEffect(()=>{
     console.log(success)
     if(success){
-      setSuccess(false);
-      // if(res.status(422)!=null){
-      //   console.log(res.status(422).error)
-      // }
-      navigate("/")
+      navigate("/login")
     }
   },[success])
   const handlechange=({currentTarget:input})=>{
@@ -35,11 +31,10 @@ export default function Register() {
     e.preventDefault();
     try {
       const url=`${process.env.REACT_APP_BACKENDURL}/signin`;
-      const {data:res}=await axios.post(url,data);
+      const res=await axios.post(url,data);
       
       console.log("repon",res)
       setSuccess(true)
-      // console.log("hhh",d)
     } catch (error) {
       console.log("ref eroor")
     }
@@ -51,13 +46,13 @@ export default function Register() {
         <div className="card shadow-2-strong card-registration">
         <div className="row formshadow"  style={{borderRadius: "10px"}}>
         <div className="col-6  leftlogin" >
-        <div className="d-flex align-items-center justify-content-center " style={{marginTop:"40px"}}><h1 style={{color:"#6D83F2"}}>Welcome !</h1></div>
+        <div className="d-flex align-items-center justify-content-center " style={{marginTop:"40px"}}><h1 style={{color:"#6D83F2",fontWeight:"600"}}>Welcome to CMS !</h1></div>
           <div className="d-flex align-items-center justify-content-center"><img src={signin} alt="" /></div>
    
       </div>
          <div className="col-6 mt-4">
           <div className="card-body p-1 p-md-3 ">
-            <h3 className="mb-4   d-flex justify-content-center" style={{color:"#6D83F2"}}>Registration</h3>
+            <h3 className="mb-4   d-flex justify-content-center" style={{color:"#6D83F2",fontWeight:"600"}}>Registration</h3>
             <form  onSubmit={handleSubmit} >
                   <div className="row">
                 <div className="col-md-6 mb-3">
@@ -133,7 +128,7 @@ export default function Register() {
               </div>
 
             </form>
-            <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/login">login</Link></div>
+            <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/login" className='h6'>Login</Link></div>
 
           </div>
         </div>

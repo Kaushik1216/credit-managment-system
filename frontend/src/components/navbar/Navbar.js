@@ -31,11 +31,11 @@ export default function Navbar(props) {
                 <ul className="menu-items">
                     {/* <li><Link to="/">Home</Link></li> */}
                     { props.user==="" && <li><Link to="/signin">Signin</Link></li>}
-                    { props.user==="" && <li><Link to="/login">login</Link></li>}
-                    {props.user!=="" && <li><Link to="/course">course</Link></li>}
-                    {props.user!=="" && <li><Link onClick={logout} to="/login">logout</Link></li>}
+                    { props.user==="" && <li><Link to="/login">Login</Link></li>}
+                    {props.user!=="" && <li><Link to="/course">Course</Link></li>}
+                    {props.user!=="" && <li><Link onClick={logout} to="/login">Logout</Link></li>}
                     {props.user!=="" && <li><Link to="/profile">Profile</Link></li>}
-                    <li><Link to="/course">{props.user}</Link></li>
+                    <li><Link to="/course">{props.user}</Link></li>      
                 </ul>
                 <h1 className="logo">CMS</h1>
            

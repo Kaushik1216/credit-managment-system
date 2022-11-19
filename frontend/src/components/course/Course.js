@@ -9,19 +9,21 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Course(props) {
-  const [login,setlogin]=useState(true)
+  const [login,setLogin]=useState(true)
   const notify = () => toast.success(`${props.loginmsg}`,{
     position:"top-center",
-    autoClose:1500,
+    autoClose:1000,
   });
   useEffect(()=>{
-    if(login && props.loginmsg!=""){
-       notify();
+    console.log("cout",login);
+    if(props.lmsg!==""){
+      notify();
     }
-    setlogin(false)
+    setLogin(false)
+    props.lmsg("")
+    console.log("cout234455667",login);
   },[])
   const puser={};
-  
   const [dataSource, setDataSource] = useState([]);
   const [editingRow, setEditingRow] = useState(null);
   const [form] = Form.useForm();
@@ -32,6 +34,7 @@ export default function Course(props) {
   const navigate = useNavigate();
   const [total ,settotal]=useState(0)
   const [semester,setsemester]=useState(1);
+  const[errormsg,seterrormsg]=useState("sddcfvghj");
   const [totalcredit,settotalcredit]=useState(0);
   const [totalcourse,settotalcourse]=useState(0);
   const [operation,setoperation]=useState("");
@@ -89,6 +92,9 @@ export default function Course(props) {
           return accumulator + value;
          }, 0);
          settotalcredit(sum)
+      }
+      if(t['1']<12){
+        seterrormsg(`Add More courses to satisfy minimum 12 credit for this semester`)
       }
       setDataSource(data);
       var  temp=t;
@@ -264,20 +270,33 @@ export default function Course(props) {
       const s = async () => {
         var tem = dataSource;
         var l = 1;
+        const credits=t;
         function file1(item) {
           item["no"] = l;
           l = l + 1;
         }
         tem.forEach(file1);
+        var holder = {};
+
+        tem.forEach(function(d) {
+          if (holder.hasOwnProperty(d.semester)) {
+            holder[((d.semester).toString())] = parseInt(holder[((d.semester).toString())]) + parseInt(d.credit);
+          } else {
+            holder[((d.semester).toString())] = parseInt(d.credit);
+          }
+        });
+        sett(holder)
+        console.log("totalnew",holder)
         setDataSource(tem);
         console.log("temp",tem)
         console.log(puser.user,"users")
-        const values = Object.values(t);
         settotalcourse(tem.length);
+        const values = Object.values(holder);
         const sum = values.reduce((accumulator, value) => {
-          return accumulator + value;
+          return accumulator + parseInt(value);
          }, 0);
          settotalcredit(sum)
+         console.log("sum",sum)
         const url = `${process.env.REACT_APP_BACKENDURL}/course`;
         const d = await axios.post(url, {
           data: tem,
@@ -337,6 +356,7 @@ export default function Course(props) {
   
   const semesterchange =(x)=>{
     var  temp=t;
+    
     if(x=="d" && semester>1){
       settotal(temp[semester-1])
       setsemester(semester-1)
@@ -346,17 +366,24 @@ export default function Course(props) {
       setsemester(semester+1)
     }
     console.log("semester " ,temp[semester])
+   
   }
   return (
     <>
-    <div ><h2 className="d-flex justify-content-center">Courses of {semester} semester | total credits {total}</h2></div>
+    
+    <div ><h2 className="d-flex justify-content-center">Courses of semester  {semester} | total credits {total}</h2></div>
        
     <div className="w-100 d-flex justify-content-center">
       <ToastContainer/>
       <header className="App-header">
         <Form form={form} onFinish={onFinish}>
           <Table columns={columns} dataSource={dataSource} rowKey="no" pagination={false}></Table>
-          <Button onClick={addnewstudents} style={{marginTop:10}}>Add new course</Button>
+        <div className="d-flex ">
+        <Button onClick={addnewstudents} style={{marginTop:10}}>Add new course</Button>
+        <div  className="courseleft h6 mt-3" style={{color:"red",display:`${total>=12?"none":"block"}`}}> &nbsp;&nbsp;&nbsp;&nbsp;<b>Warnings</b> : &nbsp;&nbsp;&nbsp;Add More courses to satisfy minimum (12) credit for this semester</div>
+        <div  className="courseleft h6 mt-3" style={{color:"red",display:`${total>=22?"block":"none"}`}}> &nbsp;&nbsp;&nbsp;&nbsp;<b>Warnings</b> : &nbsp;&nbsp;&nbsp;You have exceeded maximum (22) per semester credit limit </div>
+        </div>
+          
           <Modal
             title="Edit course"
             visible={isEditing}
@@ -444,8 +471,8 @@ export default function Course(props) {
       </header>
     </div>
     <div className="row   mt-5 ">
-      <div className="col d-flex justify-content-end"><button className="btn btn-success" onClick={()=>{semesterchange("d")}}>pre sem</button></div>
-      <div className="col d-flex justify-content-start"><button className="btn btn-success" onClick={()=>{semesterchange("i")}}>next sem</button></div>
+      <div className="col d-flex justify-content-end"><button className="btn btn-success" style={{display:`${semester===1?"none":"block"}`}} onClick={()=>{semesterchange("d")}}> &larr;semester {semester-1}</button></div>
+      <div className="col d-flex justify-content-start"><button className="btn btn-success"style={{display:`${semester===8?"none":"block"}`}} onClick={()=>{semesterchange("i")}}>semester {semester+1}&rarr;</button></div>
     </div>
     </>
   );

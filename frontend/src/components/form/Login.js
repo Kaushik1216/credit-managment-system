@@ -10,6 +10,7 @@ export default function Login(props) {
         password:""
       });
     const [success, setsuccess] = useState(false);
+    const [msg, setmsg] = useState();
 
   const navigate=useNavigate()
   useEffect(()=>{
@@ -28,6 +29,8 @@ export default function Login(props) {
         try {
           const url=`${process.env.REACT_APP_BACKENDURL}/login`;
           const {data:res}=await axios.post(url,data);
+          axios.interceptors.response.use(undefined,error=>{
+          })
           console.log(res.data.message);
           if(res.status==="success"){
             props.lmsg(res.data.message)
@@ -35,6 +38,7 @@ export default function Login(props) {
           props.luser(res.data.rollno);
           setsuccess(true)
         } catch (error) {
+          setmsg("Invalid Credentials or User not found")
           console.log("loginerror")
         }
       }
@@ -49,13 +53,14 @@ export default function Login(props) {
         <div className="card shadow-2-strong card-registration" >
         <div className="row formshadow" style={{borderRadius: "10px"}}>
         <div className="col-6  leftlogin" >
-          <div className="d-flex align-items-center justify-content-center " style={{marginTop:"45px"}}><h1 style={{color:"#6D83F2"}}>Welcome back !</h1></div>
+          <div className="d-flex align-items-center justify-content-center " style={{marginTop:"45px"}}><h1 style={{color:"#6D83F2",fontWeight:"600"}}>Welcome to CMS !</h1></div>
           <div className="d-flex align-items-center justify-content-center"><img src={loginimg} alt="" /></div>
    
       </div>
          <div className="col-6">
           <div className="card-body p-4 p-md-5">
-            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center" style={{color:"#6D83F2"}}>Login </h3>
+            <p style={{color:"red"}} className=" d-flex justify-content-center">{msg}</p>
+            <h3 className="mb-4 pb-2 pb-md-0 mb-md-5  d-flex justify-content-center" style={{color:"#6D83F2",fontWeight:"600"}}>Login </h3>
             <form  onSubmit={handleSubmit} >
               <div className="row">
                 <div className="col mb-4 pb-2">
@@ -82,7 +87,7 @@ export default function Login(props) {
               </div>
 
             </form>
-          <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/signin">Signin</Link></div>
+          <div className="m-2 d-flex justify-content-center text-decoration-underline"> <Link to="/signin" className='h5'>Register</Link></div>
          
           </div>
         </div>

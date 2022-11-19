@@ -30,6 +30,8 @@ exports.login=async (req, res, next) => {
        })
      }
    } catch (error) {
-       console.log("errorlogin")
+    res.status(422).send({
+      message:"incorrect password"
+     })
    }
 };
