@@ -28,20 +28,17 @@ if(data!=null) setuser(JSON.parse(data));
   const lmsg=(x)=>{
     setloginmsg(x);
   }
-  // let ? <Navigate to="/" /> : <Login />;
   return (
     <>
    {user!=="" && <Navbar user={user} luser={luser}/>}
     <div id="app">
     <Routes>
-        {/* <Route path="/" element={<Home loginmsg={loginmsg} user={user}/>}></Route> */}
         <Route path="" element={<Navigate to="/login"/>}></Route>
         <Route path="/signin" element={<Register/>}></Route>
         <Route path="/login" element={<Login luser={luser} lmsg={lmsg}/>}></Route>
         { user!=="" &&<Route path="/course" element={<Course user={user} loginmsg={loginmsg} lmsg={lmsg}/>}></Route>}
         { user!=="" &&<Route path="/profile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
         {<Route path="/editprofile" element={<Profile user={user} loginmsg={loginmsg}/>}></Route>}
-        {/* <Route path="/" element={<Navigate replace to="/login"/>}></Route> */}
     </Routes>
     </div>
     </>

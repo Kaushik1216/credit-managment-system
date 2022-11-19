@@ -1,9 +1,8 @@
 const router = require("express").Router();
 const{login}=require("../contollers/logincontoller")
-const{signin}=require("../contollers/signincontriller")
+const{signin}=require("../contollers/signincontroller")
 const{getprofile,editprofile}=require("../contollers/profilecontroller")
 const{postcourse}=require("../contollers/coursecontoller")
-const {userValidationResult,userValidator}=require("../validators/registervalidator")
 
 router.route("/").get(async (req, res) => {
   try {

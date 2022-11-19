@@ -15,13 +15,11 @@ export default function Course(props) {
     autoClose:1000,
   });
   useEffect(()=>{
-    console.log("cout",login);
     if(props.lmsg!==""){
       notify();
     }
     setLogin(false)
     props.lmsg("")
-    console.log("cout234455667",login);
   },[])
   const puser={};
   const [dataSource, setDataSource] = useState([]);
@@ -29,7 +27,6 @@ export default function Course(props) {
   const [form] = Form.useForm();
   const [course, setcourse] = useState([]);
   const [load, setload] = useState(false);
-  // const [deleterow, setdeleterow] = useState(true);
   const [post, setpost] = useState(false);
   const navigate = useNavigate();
   const [total ,settotal]=useState(0)
@@ -40,19 +37,16 @@ export default function Course(props) {
   const [operation,setoperation]=useState("");
   const semtotal={'1':0,'2':0,'3':0,'4':0,'5':0,'6':0,'7':0,'8':0};
   const [t,sett]=useState(semtotal)
-  // const [puser,setpuser]=useState("");
   let luser = window.localStorage.getItem("loginuser");
   if(luser !== null) puser.user = luser
   else navigate("/login")
   const fun = async () => {
     try {
-      console.log(puser.user,"user in data fetch")
       const url=`${process.env.REACT_APP_BACKENDURL}/course`;
       const response =await axios.post(url,{
         user:puser.user,
         type:"get"
       })
-      console.log("data",response.data.data)
       setcourse(response.data.data);
     } catch (err) {
       console.log(err);
@@ -68,7 +62,6 @@ export default function Course(props) {
     }
   }, [success]);
   useEffect(() => {
-    console.log("UPDATED COURS", course);
     if (course != []) {
       setload(false);
       const data = [];
@@ -99,7 +92,6 @@ export default function Course(props) {
       setDataSource(data);
       var  temp=t;
       settotal(temp[1])
-      console.log(t,"total course")
     }
   }, [course]);
 
@@ -244,8 +236,6 @@ export default function Course(props) {
     updatedDataSource.splice(editingRow, 1, { ...values, key: editingRow });
     setDataSource(updatedDataSource);
     setEditingRow(null);
-    console.log("me");
-    // handleSubmit();
   };
   const addnewstudents = () => {
     const s= semester.toString()
@@ -286,17 +276,13 @@ export default function Course(props) {
           }
         });
         sett(holder)
-        console.log("totalnew",holder)
         setDataSource(tem);
-        console.log("temp",tem)
-        console.log(puser.user,"users")
         settotalcourse(tem.length);
         const values = Object.values(holder);
         const sum = values.reduce((accumulator, value) => {
           return accumulator + parseInt(value);
          }, 0);
          settotalcredit(sum)
-         console.log("sum",sum)
         const url = `${process.env.REACT_APP_BACKENDURL}/course`;
         const d = await axios.post(url, {
           data: tem,
@@ -307,8 +293,6 @@ export default function Course(props) {
         });
       };
       s();
-      console.log("datasource updated", puser.user);
-      console.log("datasource0", dataSource);
     } catch (error) {
       console.log("error in delete document");
     }
@@ -324,13 +308,9 @@ export default function Course(props) {
       okType:"danger",
       onOk:()=>{
 
-        console.log(typeof record.toString(), "key");
         const ff = dataSource.filter((student) => student.no !== record);
         setDataSource(ff);
-        console.log("Hello");
-        console.log(dataSource);
         setload(true)
-      console.log(load,"load")
         if (post === true) {
           setpost(false);
         } else {
@@ -345,8 +325,6 @@ export default function Course(props) {
     setIsEditing(true);
     setEditingStudent({ ...record });
     semtotal[record.semester]=parseInt(semtotal[record.semester])+parseInt(semtotal[record.credit])
-    console.log("semtotla",semtotal)
-    console.log("her", editingRow);
   };
   const resetEditing = () => {
     setIsEditing(false);
@@ -365,7 +343,6 @@ export default function Course(props) {
       settotal(temp[semester+1])
       setsemester(semester+1)
     }
-    console.log("semester " ,temp[semester])
    
   }
   return (
@@ -394,7 +371,6 @@ export default function Course(props) {
             onOk={() => {
               setDataSource((pre) => {
                 return pre.map((student) => {
-                  console.log(editingStudent.key);
                   if (student.no === editingStudent.no) {
                     return editingStudent;
                   } else {
@@ -408,7 +384,6 @@ export default function Course(props) {
                 setpost(true);
               }
               setload(true)
-              console.log(load,"load")
               resetEditing();
             }}
           >

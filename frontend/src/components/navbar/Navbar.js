@@ -13,7 +13,6 @@ export default function Navbar(props) {
     }
   },[success])
   const logout =async()=>{
-    // localStorage.clear();
     window.localStorage.setItem("loginuser",JSON.stringify(""))
     props.luser("")
     setSuccess(true);
@@ -29,7 +28,6 @@ export default function Navbar(props) {
                 <span className="line line3"></span>
             </div>
                 <ul className="menu-items">
-                    {/* <li><Link to="/">Home</Link></li> */}
                     { props.user==="" && <li><Link to="/signin">Signin</Link></li>}
                     { props.user==="" && <li><Link to="/login">Login</Link></li>}
                     {props.user!=="" && <li><Link to="/course">Course</Link></li>}

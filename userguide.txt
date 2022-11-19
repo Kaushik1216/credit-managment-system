@@ -1,0 +1,24 @@
+# For Windows
+
+// Install node js .exe for Windows
+   https://nodejs.org/en/
+
+// Install npm package manages using by runing following command in command line
+   pip install npm
+
+//For frontend
+ cd frontend
+
+// run following command to install node modules in above dir
+npm i
+
+//For backend
+cd backend
+
+// run following command to install node modules in above dir
+npm i
+
+// run both backend and frontend in diffrent terminal by  writing
+
+npm start
+

@@ -8,12 +8,12 @@ export default function Profile(props) {
      const [totalcredit,settotalcredit]=useState(0);
    const [totalcourse,settotalcourse]=useState(0);
     const [data,setData]=useState({
-        firstname:"dds",
-        lastname:"ds",
-        email:"sds",
-        rollno:"ds",
-        branch:"dsds",
-        degree:"dsds"
+        firstname:"",
+        lastname:"",
+        email:"",
+        rollno:"",
+        branch:"",
+        degree:""
       });
    
    const getdata=async()=>{
@@ -39,7 +39,6 @@ export default function Profile(props) {
             user:props.user,
             data:data
           });
-          console.log("hhh",data)
         } catch (error) {
           console.log("ref eroor")
         }
@@ -48,7 +47,6 @@ export default function Profile(props) {
         setData({...data,[input.name]:input.value});
       }
       const isupdate=async()=>{
-        console.log("progile is update")
   
           updateprofile();
           setedit(false);

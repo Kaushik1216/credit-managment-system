@@ -9,7 +9,6 @@ exports.login=async (req, res, next) => {
      });
      const hashpassord = await bcrypt.compare(password,user.password);
      if(hashpassord===true){
-       console.log("correct password")
        const context={
          status:"success",
          data:{
@@ -17,12 +16,6 @@ exports.login=async (req, res, next) => {
            message:"Login Successfully"
          }
        }
-      //  const token = user.generateAuthToken();
-      //  res.cookie("jwttoken",token,{
-      //   expires:new Date(Data.now()+30000),
-      //   httpOnly:true
-      //  })
-      //  req.session.user=roll;
        res.status(200).send(context)
      }else{
        res.status(422).send({
