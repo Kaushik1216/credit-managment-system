@@ -9,16 +9,14 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export default function Course(props) {
-  const [login,setLogin]=useState(true)
   const notify = () => toast.success(`${props.loginmsg}`,{
     position:"top-center",
     autoClose:1000,
   });
   useEffect(()=>{
-    if(props.lmsg!==""){
+    if(props.loginmsg!==""){
       notify();
     }
-    setLogin(false)
     props.lmsg("")
   },[])
   const puser={};
